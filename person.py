@@ -95,12 +95,13 @@ class register:
 
     def validateSample(self):
         # date
+        # print('sample_collected_date : ',self.date,'sample_tested_date : ',self.tested)
         date = self.date
-        if date=='' or len(date)!=10:
+        if date=='' or len(date)<10:
             if self.tested=='':
                 date = self.dateGenerator(str(datetime.today().strftime('%d-%m-%y'))+' 0:0:0',day=-2)
             else : 
-                data = self.dateGenerator(self.tested,day=-1) 
+                date = self.dateGenerator(self.tested,day=-1) 
         if len(str(date))!=19:
             date = '-'.join(date.split('.'))
             date += ' 0:0:0'
@@ -108,7 +109,7 @@ class register:
         self.date = date
         # tested
         testdate= self.tested
-        if testdate=='' or len(testdate)!=10:
+        if testdate=='' or len(testdate)<10:
             testdate = self.dateGenerator(self.date,day=1)
         if len(str(testdate))!=19:
             testdate = '-'.join(testdate.split('.'))
@@ -116,7 +117,7 @@ class register:
             testdate = self.dateGenerator(testdate)
         self.tested = testdate
         # result
-        
+        # print('After change sample_collected_date : ',self.date,'sample_tested_date : ',self.tested)
         res = (self.result).lower()
         if res.find('negative')>=0 or res=='':
             res = 'negative'
@@ -142,7 +143,7 @@ class register:
         # print('Generate Date ',date)
         randhr = 1
         if hour==0:
-            randhr = random.randint(9,16)
+            randhr = random.randint(9,12)
         randsec = random.randint(1,60)
         randmin = random.randint(1,60)
         date = date.split()
@@ -168,6 +169,7 @@ class register:
                 self.br.execute_script('window.location.href = "https://cvstatus.icmr.gov.in/add_record.php"')
             return (self.browserActivityByAdd())
         except Exception as e: 
+            print('sample_collected_date : ',self.date,'sample_received_date : ',self.received,'sample_tested_date : ',self.tested)
             print(e)
             self.br.refresh()
             return False
@@ -249,6 +251,7 @@ class register:
                 br.find_element_by_xpath('//*[@id="btn"]').click()
                 if not self.waitForAlert(br):
                     return True
+            print('sample_collected_date : ',self.date,'sample_received_date : ',self.received,'sample_tested_date : ',self.tested)
             return False
         except:
             return False
