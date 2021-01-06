@@ -5,6 +5,7 @@ from datetime import datetime
 from datetime import timedelta
 from random import randint
 from selenium.webdriver.common.keys import Keys
+from RandData import sampleName
 import keyboard
 
 def random_with_n_digits(n=9):
@@ -29,7 +30,7 @@ class register:
         self.received = self.dateGenerator(self.date,hour=random.randint(2,4))
 
     def dataValidation(self):
-        sampleName = ['Ravi','Ram Kumar','Vijay','Surya','Mathu','Harshit']
+#         sampleName = ['Ravi','Ram Kumar','Vijay','Surya','Mathu','Harshit']
         rand = random.randrange(0,6)
         # name
         name = str(self.name).split('(')
@@ -110,7 +111,7 @@ class register:
         # tested
         testdate= self.tested
         if testdate=='' or len(testdate)<10:
-            testdate = self.dateGenerator(self.date,day=1)
+            testdate = self.dateGenerator(self.date,hour=random.randint(6,12))
         if len(str(testdate))!=19:
             testdate = '-'.join(testdate.split('.'))
             testdate += ' 0:0:0'
