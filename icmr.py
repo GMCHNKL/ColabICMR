@@ -87,16 +87,27 @@ class icmrProcess():
         self.br.close()
         print("Execution Finished...... :)")
 
-def getIndex(header,req):
+def getIndex(header,request):
     arr = []
     l = len(header)
-    for i in req:
-        try:
-            elem = header.index(i) 
-            arr.append(elem)  
-        except:
-            arr.append(l)
-            l+=1
+    for req in request:
+      flag = False
+      for h in header:
+        if h in req:
+          flag = True
+          arr.append(header.index(h))
+          break
+      if not flag:
+        arr.append(l)
+        l+=1
+
+    # for i in request:
+    #     try:
+    #         elem = header.index(i) 
+    #         arr.append(elem)  
+    #     except:
+    #         arr.append(l)
+    #         l+=1
     return arr
 
 
@@ -109,8 +120,22 @@ def getXlData(fname,start=0,end=''):
     itr = 0
     while (worksheet.cell(itr,0).value!='S.NO'):itr+=1
     table = []
-    cols = getIndex([str(worksheet.cell(itr,i).value).strip() for i in range(cols)],['S.NO','COVID NUMBER','SAMPLE DATE','NAME',
-    'AGE','SEX','COMPLETE ADDRESS','MOBILE NUMBER','RESULT','DATE OF RESULT','SRF ID','KIT USED','NG VALUE','RDRP VALUE'])
+    cols = getIndex([str(worksheet.cell(itr,i).value).strip() for i in range(cols)],[
+      ['S.NO'],
+      ['COVID NUMBER','COVID NO'],
+      ['SAMPLE DATE'],
+      ['NAME'],
+      ['AGE'],
+      ['SEX'],
+      ['COMPLETE ADDRESS'],
+      ['MOBILE NUMBER'],
+      ['RESULT'],
+      ['DATE OF RESULT'],
+      ['SRF ID'],
+      ['KIT USED'],
+      ['NG VALUE'],
+      ['RDRP VALUE']
+      ])
     print(cols)
     flag = False
     print('Row Count :',rows,'iter:',itr+1)
