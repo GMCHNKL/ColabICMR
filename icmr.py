@@ -118,7 +118,7 @@ def getXlData(fname,start=0,end=''):
     cols = worksheet.ncols
     rows = worksheet.nrows
     itr = 0
-    while (worksheet.cell(itr,0).value!='S.NO'):itr+=1
+    while (str(worksheet.cell(itr,0).value).strip()!='S.NO'):itr+=1
     table = []
     cols = getIndex([str(worksheet.cell(itr,i).value).strip() for i in range(cols)],[
       ['S.NO'],
